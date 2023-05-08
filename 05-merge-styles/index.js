@@ -8,10 +8,11 @@ async function joinStyles() {
   files = await fs.readdir(styles, { withFileTypes: true }, (err) => {
     if (err) console.log(err)
   });
+  await fs.writeFile(file, '');
   for (let i = 0; i < files.length; i++) {
     let style = await fs.readFile(styles + '/' + files[i].name);
     if (path.extname(files[i].name) === '.css' && files[i].isFile() === true) {
-      await fs.writeFile(file, style, { flag: "a+" });
+      await fs.appendFile(file, style);
     }
   }
 }
