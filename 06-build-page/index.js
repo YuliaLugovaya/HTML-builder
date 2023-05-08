@@ -45,7 +45,7 @@ async function createHtml() {
     }
   }
 
-  assets
+  //assets
   await fs.mkdir(assets, { recursive: true }, err => {
     if (err) throw err;
   });
