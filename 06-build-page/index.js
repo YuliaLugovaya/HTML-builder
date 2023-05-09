@@ -7,7 +7,12 @@ const folder = path.join(__dirname, './project-dist');
 const file = path.join(__dirname, './project-dist/index.html');
 const style = path.join(__dirname, './project-dist/style.css');
 const assets = path.join(__dirname, './project-dist/assets');
-const assetsOld = path.join(__dirname, './assets');
+const assetsOldFonts = path.join(__dirname, './assets/fonts');
+const assetsOldImg = path.join(__dirname, './assets/img');
+const assetsOldSvg = path.join(__dirname, './assets/svg');
+const fonts = path.join(__dirname, './project-dist/assets/fonts/');
+const img = path.join(__dirname, './project-dist/assets/img/');
+const svg = path.join(__dirname, './project-dist/assets/svg/');
 
 async function createHtml() {
   //new folder
@@ -49,10 +54,28 @@ async function createHtml() {
   await fs.mkdir(assets, { recursive: true }, err => {
     if (err) throw err;
   });
-  let filesAssets = [];
-  filesAssets = await fs.readdir(assetsOld);
-  for (let i = 0; i < filesAssets.length; i++) {
-    fs.copyFile(`${assetsOld}/${filesAssets[i]}`, `${assets}/${filesAssets[i]}`);
+  await fs.mkdir(fonts, { recursive: true }, err => {
+    if (err) throw err;
+  });
+  await fs.mkdir(img, { recursive: true }, err => {
+    if (err) throw err;
+  });
+  await fs.mkdir(svg, { recursive: true }, err => {
+    if (err) throw err;
+  });
+
+  let fontsFolder = await fs.readdir(assetsOldFonts);
+  let imgFolder = await fs.readdir(assetsOldImg);
+  let svgFolder = await fs.readdir(assetsOldSvg);
+
+  for (let i = 0; i < fontsFolder.length; i++) {
+    fs.copyFile(`${assetsOldFonts}/${fontsFolder[i]}`, `${fonts}/${fontsFolder[i]}`);
+  }
+  for (let i = 0; i < imgFolder.length; i++) {
+    fs.copyFile(`${assetsOldImg}/${imgFolder[i]}`, `${img}/${imgFolder[i]}`);
+  }
+  for (let i = 0; i < svgFolder.length; i++) {
+    fs.copyFile(`${assetsOldSvg}/${svgFolder[i]}`, `${svg}/${svgFolder[i]}`);
   }
 }
 createHtml();
